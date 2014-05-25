@@ -1,0 +1,20 @@
+eclipse
+exit
+eclipse
+exit
+compile
+eclipse
+compile
+exit
+eclipse
+compile
+reload
+exit
+eclipse
+reload
+eclipse
+compile
+exit
+compile
+run-main org.projecttsp.Main 
+eclipse
