@@ -20,7 +20,7 @@ class WebSockoNode(actorSystem: ActorSystem) {
 
   val unidentifiedConnectionIDs = Set[String]()
   val identifiedConnectionIDs = Map[String, String]()
-  val playerModels = Map[String, PlayerModel]();
+  var playerModels = Keeper.getModels
 
   def onWebSocketHandshakeComplete(webSocketId: String): Unit = {
     unidentifiedConnectionIDs.add(webSocketId)
@@ -28,7 +28,7 @@ class WebSockoNode(actorSystem: ActorSystem) {
   }
 
   def sendBadAuthenticationMessage(webSocketId: String) {
-    webServer.webSocketConnections.writeText("bad_credantials", webSocketId)
+    webServer.webSocketConnections.writeText("bad_credentials", webSocketId)
   }
 
   def sendSuccessfulAuthentication(webSocketId: String, username: String) {
@@ -44,8 +44,10 @@ class WebSockoNode(actorSystem: ActorSystem) {
       unidentifiedConnectionIDs.remove(webSocketId);
     } else if (identifiedConnectionIDs.contains(webSocketId)) {
       val username = identifiedConnectionIDs.get(webSocketId).get
+      playerModels = Keeper.getModels
       if (playerModels.contains(username)) {
-    	  playerModels.remove(username)
+        playerModels -= username
+        Keeper.setModels(playerModels)
     	  val command = "exit_game"
     	  val message = createMessage(command, List(username))
     	  webServer.webSocketConnections.writeText(message)
@@ -55,69 +57,11 @@ class WebSockoNode(actorSystem: ActorSystem) {
   }
 
   def handleMessage(wsFrame: WebSocketFrameEvent) {
-    if (wsFrame.isText) {
-      val wsFrameMessage = wsFrame.readText()
-      println("Recieved Message " + wsFrameMessage)
-      val splittedMessage = wsFrameMessage.split(" ")
-      val messageCommand = splittedMessage.head
-      val messageArguments = splittedMessage.tail
-      messageCommand match {
-        case "player_started_game" => {
-          assert(messageArguments.length == 5)
-          val username = messageArguments(0)
-          val characterId = messageArguments(1)
-          val x = messageArguments(2)
-          val y = messageArguments(3)
-          val movement = messageArguments(4)
+    val handler = actorSystem.actorOf(Props(new WebSocketHandler(webServer, identifiedConnectionIDs.toMap)))
 
-          val command = "player_started";
+    playerModels = Keeper.getModels
 
-          identifiedConnectionIDs.foreach(connectionIdToUsername => {
-            if (connectionIdToUsername._1 != wsFrame.webSocketId) {
-              val message = createMessage(command, List(username, characterId, x, y, movement))
-              println("Sending Message: " + message)
-              webServer.webSocketConnections.writeText(message, connectionIdToUsername._1)
-            } else {
-              if (playerModels.size > 0) {
-                playerModels.foreach(userToPlayerModel => {
-                  val playerModel = userToPlayerModel._2
-                  val message = createMessage(command, playerModel.toList)
-                  webServer.webSocketConnections.writeText(message, connectionIdToUsername._1)
-                })
-              }
-
-            }
-          })
-
-          playerModels.put(username, new PlayerModel(username, characterId, x, y, movement))
-        }
-
-        case "move" => {
-          assert(messageArguments.length == 4)
-          val username = messageArguments(0)
-          val x = messageArguments(1)
-          val y = messageArguments(2)
-          val movement = messageArguments(3)
-          val characterId = playerModels.get(username).get.characterId
-          playerModels.remove(username)
-
-          val command = "player_move"
-          val playerModel = new PlayerModel(username, characterId, x, y, characterId)
-          playerModels.put(username, playerModel)
-          identifiedConnectionIDs.foreach(connectionIdToUsername => {
-            if (connectionIdToUsername._1 != wsFrame.webSocketId) {
-              val message = createMessage(command, List(username, x, y, movement))
-              println("Sending Message: " + message)
-              webServer.webSocketConnections.writeText(message, connectionIdToUsername._1)
-            }
-          })
-        }
-
-        case _ => {
-          throw new RuntimeException("Unrecognized command: " + messageCommand)
-        }
-      }
-    }
+    handler ! wsFrame
   }
 
   def authenticate(username: String, password: String): Boolean = {
@@ -161,6 +105,7 @@ class WebSockoNode(actorSystem: ActorSystem) {
                 }
               } else throw new IllegalArgumentException("Bad Formatted Message")
             } else if (identifiedConnectionIDs.contains(wsFrame.webSocketId)) {
+
               handleMessage(wsFrame);
             } else {
               throw new SecurityException("The sender is not authorized or authenticated to send messaged");
@@ -174,7 +119,7 @@ class WebSockoNode(actorSystem: ActorSystem) {
 
   })
 
-  val webServer: WebServer = new WebServer(WebServerConfig(), routes, actorSystem)
+  val webServer: WebServer = new WebServer(WebServerConfig("TSP-Server", "192.168.1.2", 8888), routes, actorSystem)
 
   def start(): Unit = {
 
