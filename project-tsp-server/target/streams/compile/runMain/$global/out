@@ -1,7 +1,7 @@
 [0m[[0minfo[0m] [0mRunning org.projecttsp.Main [0m
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
-[0m[[0mdebug[0m] [0m	/home/fear-sfx/Desktop/project-tsp-server/target/scala-2.10/classes[0m
+[0m[[0mdebug[0m] [0m	/home/fear-sfx/Desktop/pesho/project-tsp-server/target/scala-2.10/classes[0m
 [0m[[0mdebug[0m] [0m	/home/fear-sfx/.sbt/boot/scala-2.10.3/lib/scala-library.jar[0m
 [0m[[0mdebug[0m] [0m	/home/fear-sfx/.ivy2/cache/com.typesafe.akka/akka-cluster_2.10/jars/akka-cluster_2.10-2.3.1.jar[0m
 [0m[[0mdebug[0m] [0m	/home/fear-sfx/.ivy2/cache/com.typesafe.akka/akka-remote_2.10/jars/akka-remote_2.10-2.3.1.jar[0m
@@ -21,4 +21,4 @@
 [0m[[0mdebug[0m] [0m	/home/fear-sfx/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.0.9.jar[0m
 [0m[[0mdebug[0m] [0mWaiting for thread run-main-0 to terminate.[0m
 [0m[[0mdebug[0m] [0m	Thread run-main-0 exited.[0m
-[0m[[0mdebug[0m] [0mWaiting for thread New I/O worker #16 to terminate.[0m
+[0m[[0mdebug[0m] [0mWaiting for thread New I/O worker #1 to terminate.[0m

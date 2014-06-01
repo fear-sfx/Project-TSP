@@ -1,20 +1,4 @@
-eclipse
-exit
-eclipse
-exit
+last compile:compile
 compile
-eclipse
-compile
+cd ..
 exit
-eclipse
-compile
-reload
-exit
-eclipse
-reload
-eclipse
-compile
-exit
-compile
-run-main org.projecttsp.Main 
-eclipse

@@ -34,7 +34,7 @@ object Main {
     val config = ConfigFactory.parseString("akka.remote.netty.tcp.port=" + 0).
       withFallback(ConfigFactory.load())
     
-    val webSocketNode = new WebSockoNode(ActorSystem("WebSocko", config));
+    val webSocketNode = new WebSockoNode(ActorSystem(clusterName, config));
     webSocketNode.start();
   }
 
