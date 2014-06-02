@@ -4,7 +4,7 @@
 		module="project-tsp-server_2.10"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20140530111121"
+		publication="20140602063108"
 	>
 		<description>
 		project-tsp-server

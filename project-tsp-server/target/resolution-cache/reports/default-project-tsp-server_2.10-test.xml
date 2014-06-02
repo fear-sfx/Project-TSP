@@ -7,7 +7,7 @@
 		revision="0.1-SNAPSHOT"
 		conf="test"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20140530111121"/>
+		date="20140602063108"/>
 	<dependencies>
 		<module organisation="org.mashupbots.socko" name="socko-webserver_2.10">
 			<revision name="0.4.2" status="release" pubdate="20140228050251" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.sockoweb.org" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="8">

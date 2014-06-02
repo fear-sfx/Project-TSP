@@ -1,4 +1,19 @@
-last compile:compile
-compile
-cd ..
+eclipse
 exit
+eclipse
+exit
+compile
+eclipse
+compile
+exit
+eclipse
+compile
+reload
+exit
+eclipse
+reload
+eclipse
+compile
+run-main org.projecttsp.RunAuthenticationNode
+compile
+eclipse
