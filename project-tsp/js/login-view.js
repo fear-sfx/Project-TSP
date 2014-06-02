@@ -1,4 +1,4 @@
-function LoginView(context2D, baseModel, x, y, width, height, isEnabled) {
+function LoginView(context2D, baseModel, x, y, width, height, isEnabled, level) {
 	var self = this;
 	Rectanguler(UIComponent(self, isEnabled));
 	self.setDimensions(x, y, width, height);
@@ -131,13 +131,15 @@ function LoginView(context2D, baseModel, x, y, width, height, isEnabled) {
 
 		self.addChildren([chooseCharacterButton]);
 	}
-
+	
+	var aspectRatio = ResourceManagerSingleton.AspectRatio;
+	
 	var characterHeight = 32;
 	var characterWidth = characterHeight;
 
-	var characterX = self.x + (self.width - characterWidth) / 2;
-	var characterY = self.y + chooseCharacterButtonY + chooseCharacterButtonHeight + chooseCharacterButtonHeight / 2;
-
+	var characterX = self.x + (usernameButtonX/aspectRatio)*2 - characterWidth/2;
+	var characterY = self.y + chooseCharacterButtonY/aspectRatio + characterHeight*1.4;
+	
 	var heroSprite = new HeroSprite(context2D, 
 									1, 
 									characterX, 

@@ -26,6 +26,10 @@ function Level(context2D, width, height, levelModel) {
 		return textureWidth;
 	} 
 
+	this.getRowsCount = function() {
+		return rowsCount;
+	}
+		
 	this.getTextureHeight = function() {
 		return textureHeight;
 	}
@@ -35,9 +39,9 @@ function Level(context2D, width, height, levelModel) {
 	}
 
 	this.draw = function(deltaSeconds) {
-
-		ctx.fillStyle = "yellow";
-		ctx.fillRect(0,0, width, height);
+		
+		ctx.fillStyle = "#E6C585";
+		ctx.fillRect(0, 0, width, height);
 		
 		for (var i = 0; i < mapGrid.length; i++) {
 			var textureImage = textures[mapGrid[i]];

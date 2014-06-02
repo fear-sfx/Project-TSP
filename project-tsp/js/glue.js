@@ -32,8 +32,8 @@ function Glue() {
 	
 	this.serverProtocol = new ServerProtocol(this.webSocketConnection, this.messageBroker);
 	this.baseModel = new BaseModel();
-	this.loginView = new LoginView(this.ctx, baseModel, 0, 0, this.canvas.width, this.canvas.height, true);
-	serverIP = this.loginView.getChild(2);	
+	
+	//serverIP = this.loginView.getChild(2);	
 	//this.serverProtocol.init('ws://' + serverIP.getLabel() + ':8888/websockets');
 	
 
@@ -58,7 +58,7 @@ function Glue() {
 	this.mainView.onRightEnded = this.gameController.onHold;
 	this.mainView.onDownEnded = this.gameController.onHold;
 
-	//loginview
+	this.loginView = new LoginView(this.ctx, baseModel, 0, 0, this.canvas.width, this.canvas.height, true, levelOne);
 	this.addEventListener("keydown", function(event) {
 		switch(event.keyCode) {
 			case 37 : this.mainView.onLeftStarted(); break;
